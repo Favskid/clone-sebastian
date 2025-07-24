@@ -1,4 +1,8 @@
 /* Reset basic spacing */
+html {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -10,19 +14,24 @@ body {
   display: flex;
   justify-content: space-between; /* h1 left, menu-toggle right */
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   position: relative;
   z-index: 10;
   background: white;
 }
 
-/* ☰ Hamburger toggle */
+.mobile-navbar h1 {
+  font-size: 3.7rem;
+  margin: 0;
+  font-weight: 450;
+}
+
 #menu-toggle {
   font-size: 2.5rem;
   cursor: pointer;
 }
 
-/* Fullscreen nav menu layout */
+
 #mobile-menu {
   position: fixed;
   top: 0;
@@ -30,16 +39,25 @@ body {
   right: 0;
   bottom: 0;
   background: white;
-  display: none;
+  /* display: none; */
   flex-direction: column;
   justify-content: start; /* align items at top */
-  padding: 2rem 1.5rem;
-  z-index: 100;
+  padding: 0.5rem 1.5rem;
+  z-index: 110;
+  /* Slide in from bottom */
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* When menu is active (shown) */
 #mobile-menu.active {
-  display: flex;
+  /* display: flex; */
+  /* Slide in to position */
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Top bar with h1 and close button */
@@ -52,9 +70,9 @@ body {
 }
 
 .menu-header h1 {
-  font-size: 4rem;
+  font-size: 3.7rem;
   margin: 0;
-  font-weight: 400;
+  font-weight: 450;
 }
 
 #menu-toggle i,
@@ -94,7 +112,6 @@ body {
 
 }
 
-/* Social icons at the bottom left corner */
 .socials {
   position: absolute;
   bottom: 2rem;
@@ -102,9 +119,249 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s, opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+}
+
+#mobile-menu.active .socials {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .socials a i {
   font-size: 1.5rem;
   color: black;
+}
+
+.main-content img{
+    max-width: 100vh;
+}
+
+/* Fullscreen image */
+.main-content img {
+  width: 100vw;
+  height: 559px;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Base Footer Container === */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 100;
+}
+
+/* === Toggle + Text Wrapper === */
+.footer-toggle-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem 1.5rem;
+  z-index: 101;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Hide when active */
+.footer-toggle-wrapper.hide {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* Footer Text */
+.footer-text {
+  text-align: right;
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.2px;
+}
+
+/* === Toggle Bar === */
+.footer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  font-size: 1.8rem;
+  user-select: none;
+}
+
+/* Caret rotation */
+.footer-toggle i {
+  transition: transform 0.3s ease;
+}
+.footer-toggle.open i {
+  transform: rotate(180deg);
+}
+.footer-toggle hr {
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid #000;
+  margin: 0;
+}
+
+/* === Hidden Footer Content === */
+.hidden-footer {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  background-color: black;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  color: white;
+  z-index: 100;
+  opacity: 0;
+  padding-left: 9px;
+  
+}
+
+.hidden-footer h1 {
+  font-size: 13px;
+
+}
+
+.hidden-footer p {
+  font-size: 11px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 11px;
+}
+
+/* Fade-in text with delays */
+.hidden-footer h1,
+.hidden-footer p,
+.footer-links a {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+/* Delayed fade-ins */
+.hidden-footer.active h1 {
+  transition-delay: 0.3s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden-footer.active p {
+  transition-delay: 0.3s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden-footer.active .footer-links a {
+  transition-delay: 0.3s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+/* When revealed */
+.hidden-footer.active {
+  bottom: 0;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer-toggle-wrapper.hide {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+body.menu-open .hidden-footer,
+body.menu-open .footer-toggle-wrapper {
+  display: none !important;
+}
+
+/* --- Dropdown styles for mobile menu --- */
+.menu-link-dropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-toggle {
+  font-size: 2em;
+  text-decoration: none;
+  color: #000;
+  font-weight: 270;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0.3em 0;
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.dropdown-toggle i {
+  margin-left: 0.5em;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-link-dropdown.open .dropdown-toggle i {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  margin-left: 1.5em;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-link-dropdown.open .dropdown-menu {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+  color: #222;
+  cursor: pointer;
+  position: relative;
+  padding: 0.2em 0 0.2em 0.7em;
+  transition: color 0.2s;
+}
+
+.dropdown-option:hover {
+  color: #555;
+}
+
+.dropdown-line {
+  display: inline-block;
+  width: 3px;
+  height: 1.5em;
+  background: #222;
+  margin-right: 0.7em;
+  border-radius: 2px;
+  transform: scaleY(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-link-dropdown.open .dropdown-menu .dropdown-option .dropdown-line {
+  transform: scaleY(1);
 }
