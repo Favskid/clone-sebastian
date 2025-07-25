@@ -1,4 +1,14 @@
 window.onload = () => {
+  // Loading overlay logic
+  const loadingOverlay = document.getElementById('loading-overlay');
+  if (loadingOverlay) {
+    setTimeout(() => {
+      loadingOverlay.classList.add('hide');
+      setTimeout(() => {
+        loadingOverlay.remove();
+      }, 800); // match the CSS transition
+    }, 2000);
+  }
   const menuToggle = document.getElementById("menu-toggle");
   const menuClose = document.getElementById("menu-close");
   const mobileMenu = document.getElementById("mobile-menu");
